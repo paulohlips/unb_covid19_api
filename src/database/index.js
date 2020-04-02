@@ -2,10 +2,12 @@
 import Sequelize from "sequelize";
 
 import User from "../app/models/User";
+import Volunteer from "../app/models/Volunteer";
+import HelpRequest from "../app/models/HelpRequest";
 
 import databaseConfig from "../config/database";
 
-const models = [User];
+const models = [User, Volunteer, HelpRequest];
 
 class Database {
   constructor() {

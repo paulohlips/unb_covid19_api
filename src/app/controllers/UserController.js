@@ -5,6 +5,7 @@ class UserController {
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
+      whatsapp: Yup.string().required(),
       email: Yup.string()
         .email()
         .required(),
@@ -31,20 +32,24 @@ class UserController {
       id,
       name,
       email,
+      whatsapp,
       address,
       birth_date,
       link_unb,
-      risk_group
+      risk_group,
+      user_location
     } = await User.create(req.body);
 
     return res.json({
       id,
       name,
       email,
+      whatsapp,
       address,
       birth_date,
       link_unb,
-      risk_group
+      risk_group,
+      user_location
     });
   }
 

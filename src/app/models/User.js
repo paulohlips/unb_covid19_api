@@ -7,12 +7,14 @@ class User extends Model {
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
+        whatsapp: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
         address: Sequelize.STRING,
         birth_date: Sequelize.STRING,
         link_unb: Sequelize.STRING,
-        risk_group: Sequelize.STRING
+        risk_group: Sequelize.STRING,
+        user_location: Sequelize.STRING
       },
       {
         sequelize
