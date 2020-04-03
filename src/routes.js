@@ -19,6 +19,7 @@ routes.post("/sessions", SessionController.store);
 routes.use(authMiddleware);
 
 routes.post("/volunteers", VolunteersController.store);
+routes.put("/volunteers", VolunteersController.update);
 
 routes.post("/help", HelpRequestController.store);
 

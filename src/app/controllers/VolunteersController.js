@@ -69,6 +69,27 @@ class VolunteersController {
 
     return res.json(volunteers);
   }
+
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      email: Yup.string().required(),
+      is_sick: Yup.boolean().required()
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: "Validation fails" });
+    }
+
+    const { email, is_sick } = req.body;
+
+    const { id, name } = await Volunteer.findOne({ where: { email } });
+
+    const result = Volunteer.update({ is_sick: is_sick }, { where: { email } });
+
+    console.log(result);
+
+    return res.json({ id, name, is_sick });
+  }
 }
 
 export default new VolunteersController();
