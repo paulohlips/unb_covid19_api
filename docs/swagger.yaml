@@ -11,7 +11,7 @@ tags:
     description: 'to sessions'
   - name: users
     description: 'to clients'
-  - name: Volunteer
+  - name: Volunteers
     description: 'to volunteers'
   - name: Help Request
     description: 'to help request'
@@ -29,6 +29,7 @@ paths:
           description: 'Sessions information'
           schema:
             $ref: '#/definitions/SessionData'
+            
       responses:
         '200':
           description: OK
@@ -40,6 +41,24 @@ paths:
             $ref: '#/definitions/SessionResponse401'
 
   /users:
+  
+    get:
+      tags:
+        - users
+      description: 'Return a list of all users registered in the database'
+      parameters:
+        - name: user
+          type: string
+          in: query
+          description: 'Filter by names.<br><b>Example:</b>
+                        `?name=Daniel`'
+
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Response200'
+            
     post:
       tags:
         - users
@@ -61,22 +80,42 @@ paths:
           schema:
             $ref: '#/definitions/ValidationFails'
 
+
+  /volunteers:
     get:
       tags:
-        - users
-      description: 'Send user information to API'
-      parameters:
-        - name: users
-          in: body
-          required: true
-          description: 'Users information'
-          schema:
-            $ref: '#/definitions/UsersData'
+        - Volunteers
+      description: "Return a list of volunteers"
+      
       responses:
         '200':
           description: OK
-          schema:
-            $ref: '#/definitions/Response200'
+    post:
+      tags:
+        - Volunteers
+      description: "You can create a volunteer"
+      
+      responses:
+        '200':
+          description: OK
+
+  /help:
+    get:
+      tags:
+        - Help Request
+      description: "Return a list of help alerts"
+      
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+        - Help Request
+      description: "You can create an Help request"
+      
+      responses:
+        '200':
+          description: OK
 
 
 definitions:
@@ -176,4 +215,17 @@ definitions:
       message:
         type: string
         example: 'Success'
+        
+  HelpRequest:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "Daniel Prado"
+      sintoms:
+        type: string
+        example: "Tosse seca"
+      whatsapp:
+        type: string
+        example: "6155555555"
 
