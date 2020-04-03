@@ -9,18 +9,19 @@ import authMiddleware from "./app/middlewares/auth";
 
 const routes = new Router();
 
-routes.get("/help", HelpRequestController.index);
-routes.get("/volunteers", VolunteersController.index);
-routes.get("/users", UserController.index);
 routes.post("/users", UserController.store);
 
 routes.post("/sessions", SessionController.store);
 
 routes.use(authMiddleware);
 
+routes.get("/volunteers", VolunteersController.index);
+routes.get("/users", UserController.index);
+
 routes.post("/volunteers", VolunteersController.store);
 routes.put("/volunteers", VolunteersController.update);
 
+routes.get("/help", HelpRequestController.index);
 routes.post("/help", HelpRequestController.store);
 
 export default routes;
