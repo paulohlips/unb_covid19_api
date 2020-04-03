@@ -9,9 +9,9 @@ import authMiddleware from "./app/middlewares/auth";
 
 const routes = new Router();
 
-routes.get("/users", (req, res) => {
+routes.get("/", (req, res) => {
   return res.render(
-    "Bem-vindo, \n\n Para mais informações consulte a documentação em \n\n https://github.com/paulohlips/unb_covid19_api "
+    "Bem-vindo, \n\nhttps://github.com/paulohlips/unb_covid19_api Para mais informações consulte a documentação em \n\n https://github.com/paulohlips/unb_covid19_api "
   );
 });
 
