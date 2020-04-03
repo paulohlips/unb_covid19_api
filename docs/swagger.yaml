@@ -45,19 +45,24 @@ paths:
     get:
       tags:
         - users
-      description: 'Return a list of all users registered in the database'
-      parameters:
-        - name: user
-          type: string
-          in: query
-          description: 'Filter by names.<br><b>Example:</b>
-                        `?name=Daniel`'
+      description: 'Return a list of all users registered in the database<br>You have to use a token'
+      # parameters:
+      #   - name: user
+      #     type: string
+      #     in: query
+      #     description: 'Filter by names.<br><b>Example:</b>
+      #                   `?name=Daniel`'
 
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Response200'
+            $ref: '#/definitions/UsersResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Response401'
+
             
     post:
       tags:
@@ -75,47 +80,90 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/UsersData'
-        '400':
-          description: Bad Request
+        '401':
+          description: Unauthorized
           schema:
-            $ref: '#/definitions/ValidationFails'
+            $ref: '#/definitions/Response401'
 
 
   /volunteers:
     get:
       tags:
         - Volunteers
-      description: "Return a list of volunteers"
+      description: "Return a list of volunteers<br>You have to use a token"
       
       responses:
         '200':
           description: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ValidationFails'
+          
     post:
       tags:
         - Volunteers
       description: "You can create a volunteer"
-      
+      parameters:
+        - name: Volunteers
+          in: body
+          required: true
+          description: "Create a Volunteer"
+          schema:
+            $ref: '#/definitions/postVolunteers'
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/volunteerExist'
+    
+    put:
+      tags:
+        - Volunteers
+      description: "You can change status of the 'key is_sick'"
+      parameters:
+        - name: Volunteers
+          in: body
+          required: true
+          description: "Is sick validation"
+          schema:
+            $ref: '#/definitions/putVolunteers'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/putVolunteers200'
 
   /help:
     get:
       tags:
         - Help Request
-      description: "Return a list of help alerts"
-      
+      description: "Return a list of help alerts <br> You have to use a token"
       responses:
         '200':
           description: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ValidationFails'
     post:
       tags:
         - Help Request
-      description: "You can create an Help request"
-      
+      description: 'Send user information to API'
+      parameters:
+        - name: users
+          in: body
+          required: true
+          description: 'Users information'
+          schema:
+            $ref: '#/definitions/HelpRequest'
       responses:
         '200':
-          description: OK
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ValidationFails'
 
 
 definitions:
@@ -169,6 +217,45 @@ definitions:
         type: string
         example: '-15.7757876:-48.077829'
 
+  UsersResponse:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: 'Paulo'
+      email:
+        type: string
+        example: 'paulo@gmail.com'
+      whatsapp:
+        type: string
+        example: '6199999999'
+      password_hash:
+        type: string
+        example: '$2a$08$oAqpElaLP'
+      address:
+        type: string
+        example: '72705010'
+      birth_date:
+        type: string
+        example: '01/01/2001'
+      link_unb:
+        type: string
+        example: 'Discente'
+      risk_group:
+        type: string
+        example: 'Asma'
+      user_location:
+        type: string
+        example: '-15.7757876:-48.077829'
+      createdAt:
+        type: string
+        example: "2020-04-03T13:27:07.746Z"
+      updatedAt:
+        type: string
+        example: "2020-04-03T13:27:07.746Z"
 
   SessionResponse200:
     type: object
@@ -194,9 +281,14 @@ definitions:
     properties:
       error:
         type: string
-        example: "Password does not match"
+        example: "Email/Password does not match"
         
-  
+  Response401:
+    type: object
+    properties:
+      error:
+        type: string
+        example: Invalid Token
         
   ValidationFails:
     type: object
@@ -229,3 +321,93 @@ definitions:
         type: string
         example: "6155555555"
 
+
+  HelpRequest200:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: "Daniel Prado"
+      sintoms:
+        type: string
+        example: "Tosse seca"
+      whatsapp:
+        type: string
+        example: "6155555555"
+      user_location:
+        type: string
+        example: '-15.7757876:-48.077829'
+      createdAt:
+        type: string
+        example: "2020-04-03T13:27:07.746Z"
+      updatedAt:
+        type: string
+        example: "2020-04-03T13:27:07.746Z"
+      
+      
+  putVolunteers:
+    type: object
+    properties:
+      email:
+        type: string
+        example: "paulo@gmail.com"
+      is_sick:
+        type: boolean
+        example: false
+        
+  putVolunteers200:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: "Paulo"
+      is_sick:
+        type: boolean
+        example: false
+        
+  postVolunteers:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "Paulo"
+      email:
+        type: string
+        example: "paulo@gmail.com"
+      whatsapp:
+        type: string
+        example: "61555555555"
+      cpf:
+        type: string
+        example: "22222222222"
+      professional_id:
+        type: string
+        example: "124.212-5"
+      uf:
+        type: string
+        example: "DF"
+      specialty:
+        type: string
+        example: "Engenheiro"
+      administrative_region:
+        type: string
+        example: "plano Piloto"
+      activities:
+        type: string
+        example: "Configuração de VMs"
+      user_location:
+        type: string
+        example: "-15.7757876:-48.077829"
+        
+  volunteerExist:
+    type: object
+    properties:
+      error:
+        type: string
+        example: "VolunteerExists already exist"
