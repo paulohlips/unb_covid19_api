@@ -9,6 +9,12 @@ import authMiddleware from "./app/middlewares/auth";
 
 const routes = new Router();
 
+routes.get("/users", (req, res) => {
+  return res.render(
+    "Bem-vindo, \n\n Para mais informações consulte a documentação em \n\n https://github.com/paulohlips/unb_covid19_api "
+  );
+});
+
 routes.post("/users", UserController.store);
 
 routes.post("/sessions", SessionController.store);
