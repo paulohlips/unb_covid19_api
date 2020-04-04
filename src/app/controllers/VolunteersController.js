@@ -5,9 +5,7 @@ class VolunteersController {
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
-      email: Yup.string()
-        .email()
-        .required(),
+      email: Yup.string().email().required(),
       whatsapp: Yup.string().required(),
       cpf: Yup.string().required(),
       professional_id: Yup.string().required(),
@@ -15,7 +13,7 @@ class VolunteersController {
       specialty: Yup.string().required(),
       administrative_region: Yup.string().required(),
       activities: Yup.string().required(),
-      user_location: Yup.string().required()
+      user_location: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -23,7 +21,7 @@ class VolunteersController {
     }
 
     const volunteerExists = await Volunteer.findOne({
-      where: { email: req.body.email }
+      where: { email: req.body.email },
     });
 
     if (volunteerExists) {
@@ -41,7 +39,7 @@ class VolunteersController {
       administrative_regiony,
       activities,
       user_location,
-      is_sick
+      is_sick,
     } = await Volunteer.create(req.body);
 
     return res.json({
@@ -55,17 +53,24 @@ class VolunteersController {
       administrative_regiony,
       activities,
       user_location,
-      is_sick
+      is_sick,
     });
   }
 
   async index(req, res) {
     const { ra } = req.query;
-    const volunteers = await Volunteer.findAll({
-      where: {
-        administrative_region: ra
-      }
-    });
+
+    if (ra) {
+      console.log(ra);
+      const volunteers = await Volunteer.findAll({
+        where: {
+          administrative_region: ra,
+        },
+      });
+
+      return res.json(volunteers);
+    }
+    const volunteers = await Volunteer.findAll({});
 
     return res.json(volunteers);
   }
@@ -73,7 +78,7 @@ class VolunteersController {
   async update(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string().required(),
-      is_sick: Yup.boolean().required()
+      is_sick: Yup.boolean().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -85,8 +90,6 @@ class VolunteersController {
     const { id, name } = await Volunteer.findOne({ where: { email } });
 
     const result = Volunteer.update({ is_sick: is_sick }, { where: { email } });
-
-    console.log(result);
 
     return res.json({ id, name, is_sick });
   }
