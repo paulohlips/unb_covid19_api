@@ -16,6 +16,8 @@ class VolunteersController {
       user_location: Yup.string().required(),
     });
 
+    console.log("AAAAAAAAAAAA", schema);
+
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
     }
