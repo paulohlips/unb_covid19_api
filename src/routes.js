@@ -10,7 +10,7 @@ import authMiddleware from "./app/middlewares/auth";
 
 const routes = new Router();
 
-routes.use(cors);
+routes.use(cors());
 
 routes.get("/", (req, res) => {
   return res.send(
