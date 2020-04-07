@@ -6,16 +6,12 @@ class UserController {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       whatsapp: Yup.string().required(),
-      email: Yup.string()
-        .email()
-        .required(),
-      password: Yup.string()
-        .required()
-        .min(6),
+      email: Yup.string().email().required(),
+      password: Yup.string().required().min(6),
       address: Yup.string().required(),
       birth_date: Yup.string().required(),
       link_unb: Yup.string().required(),
-      risk_group: Yup.string().required()
+      risk_group: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -37,7 +33,7 @@ class UserController {
       birth_date,
       link_unb,
       risk_group,
-      user_location
+      user_location,
     } = await User.create(req.body);
 
     return res.json({
@@ -49,7 +45,7 @@ class UserController {
       birth_date,
       link_unb,
       risk_group,
-      user_location
+      user_location,
     });
   }
 
