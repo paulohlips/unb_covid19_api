@@ -7,6 +7,8 @@ import VolunteersController from "./app/controllers/VolunteersController";
 import HelpRequestController from "./app/controllers/HelpRequestController";
 
 import authMiddleware from "./app/middlewares/auth";
+import ProfileController from "./app/controllers/ProfileController";
+import UserProfileController from "./app/controllers/UserProfileController";
 
 const routes = new Router();
 
@@ -20,12 +22,17 @@ routes.get("/", (req, res) => {
 
 routes.post("/users", UserController.store);
 
+routes.post("/profiles", ProfileController.store);
+
+routes.post("/users_profiles", UserProfileController.store);
+
 routes.post("/sessions", SessionController.store);
 
 routes.use(authMiddleware);
 
 routes.get("/volunteers", VolunteersController.index);
 routes.get("/users", UserController.index);
+routes.get("/profiles", ProfileController.index);
 
 routes.post("/volunteers", VolunteersController.store);
 routes.put("/volunteers", VolunteersController.update);
