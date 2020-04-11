@@ -1,6 +1,6 @@
 import Sequelize, { Model } from "sequelize";
 
-class Profile extends Model {
+class UserProfile extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -15,4 +15,4 @@ class Profile extends Model {
   }
 }
 
-export default User;
+export default UserProfile;

@@ -14,4 +14,4 @@ class Profile extends Model {
   }
 }
 
-export default User;
+export default Profile;

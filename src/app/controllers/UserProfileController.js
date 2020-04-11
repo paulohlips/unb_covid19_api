@@ -12,16 +12,16 @@ class UserProfileController {
       return res.status(400).json({ error: "Validation fails" });
     }
 
-    const userProfileExists = await User.findOne({ where: { userId: req.body.userId, profileId: req.body.profileId }});
+    const userProfileExists = await UserProfile.findOne({ where: { userId: req.body.userId, profileId: req.body.profileId }});
 
     if (userProfileExists) {
-      return res.status(400).json({ error: "User already ." });
+      return res.status(400).json({ error: "User already belongs to this profile." });
     }
 
     const {
       userId,
       profileId
-    } = await Profile.create(req.body);
+    } = await UserProfile.create(req.body);
 
     return res.json({
       userId,
@@ -30,7 +30,7 @@ class UserProfileController {
   }
 
   async index(req, res) {
-    const ocurrences = await Profile.findAll();
+    const ocurrences = await UserProfile.findAll();
 
     return res.json(ocurrences);
   }
