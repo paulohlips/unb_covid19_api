@@ -16,8 +16,6 @@ class VolunteersController {
       user_location: Yup.string().required(),
     });
 
-    console.log("AAAAAAAAAAAA", schema);
-
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
     }
@@ -75,6 +73,17 @@ class VolunteersController {
     const volunteers = await Volunteer.findAll({});
 
     return res.json(volunteers);
+  }
+
+  async show(req, res) {
+    const { email } = req.body;
+
+    const volunteer = await Volunteer.findOne({ where: { email } });
+
+    if (volunteer) {
+      return res.json(volunteer);
+    }
+    return res.status(404).json({ message: "Is not volunteer" });
   }
 
   async update(req, res) {

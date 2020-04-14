@@ -12,7 +12,7 @@ class UserController {
       birth_date: Yup.string().required(),
       link_unb: Yup.string().required(),
       risk_group: Yup.string(),
-      user_location: Yup.string(),
+
       matricula_unb: Yup.string().required(),
     });
 
