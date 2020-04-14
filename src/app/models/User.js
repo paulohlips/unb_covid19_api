@@ -14,14 +14,15 @@ class User extends Model {
         birth_date: Sequelize.STRING,
         link_unb: Sequelize.STRING,
         risk_group: Sequelize.STRING,
-        user_location: Sequelize.STRING
+        user_location: Sequelize.STRING,
+        matricula_unb: Sequelize.STRING,
       },
       {
-        sequelize
+        sequelize,
       }
     );
 
-    this.addHook("beforeSave", async user => {
+    this.addHook("beforeSave", async (user) => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
       }
