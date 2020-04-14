@@ -20,22 +20,23 @@ routes.get("/", (req, res) => {
   );
 });
 
-routes.post("/users", UserController.store);
-
-routes.post("/profiles", ProfileController.store);
-
-routes.post("/users_profiles", UserProfileController.store);
 
 routes.post("/sessions", SessionController.store);
 
-routes.use(authMiddleware);
+routes.post("/users", UserController.store);
 
-routes.get("/volunteers", VolunteersController.index);
-routes.get("/users", UserController.index);
-routes.get("/profiles", ProfileController.index);
+routes.post("/profiles",authMiddleware, ProfileController.store);
 
-routes.post("/volunteers", VolunteersController.store);
-routes.put("/volunteers", VolunteersController.update);
+routes.post("/users_profiles",authMiddleware, UserProfileController.store);
+
+routes.get("/volunteers",authMiddleware, VolunteersController.index);
+routes.get("/users"
+//,authMiddleware
+, UserController.index);
+routes.get("/profiles",authMiddleware, ProfileController.index);
+
+routes.post("/volunteers",authMiddleware, VolunteersController.store);
+routes.put("/volunteers",authMiddleware, VolunteersController.update);
 
 routes.get("/help", HelpRequestController.index);
 routes.post("/help", HelpRequestController.store);

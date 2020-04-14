@@ -4,28 +4,28 @@ import * as Yup from "yup";
 class UserProfileController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      userId: Yup.number().required(),
-      profileId: Yup.number().required()
+      user_id: Yup.number().required(),
+      profile_id: Yup.number().required()
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
     }
 
-    const userProfileExists = await UserProfile.findOne({ where: { userId: req.body.userId, profileId: req.body.profileId }});
+    const userProfileExists = await UserProfile.findOne({ where: { user_id: req.body.user_id, profile_id: req.body.profile_id }});
 
     if (userProfileExists) {
       return res.status(400).json({ error: "User already belongs to this profile." });
     }
 
     const {
-      userId,
-      profileId
+      user_id,
+      profile_id
     } = await UserProfile.create(req.body);
 
     return res.json({
-      userId,
-      profileId
+      user_id,
+      profile_id
     });
   }
 

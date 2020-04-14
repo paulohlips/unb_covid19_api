@@ -1,5 +1,7 @@
 import Sequelize, { Model } from "sequelize";
 import bcrypt from "bcryptjs";
+import UserProfile from "./UserProfile";
+import Profile from "./Profile";
 
 class User extends Model {
   static init(sequelize) {
@@ -29,8 +31,23 @@ class User extends Model {
     return this;
   }
 
+  static async buscarPorEmail(email) {
+    const user = await super.findOne({ where: { email: email } });
+    if (!user) {
+      return undefined;
+    }
+    return user;
+  }
+
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
+  }
+
+  static associate(models) {
+    this.belongsToMany(models.Profile, {
+      through: models.UserProfile,
+      as: 'profiles'
+    });
   }
 }
 

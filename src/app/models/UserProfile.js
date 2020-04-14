@@ -1,18 +1,17 @@
-import Sequelize, { Model } from "sequelize";
+import { Model } from "sequelize";
 
 class UserProfile extends Model {
   static init(sequelize) {
     super.init(
+      {},
       {
-        userId: Sequelize.INTEGER,
-        profileId: Sequelize.INTEGER
-      },
-      {
-        sequelize
+        sequelize,
+        timestamps: false,
+        tableName: 'users_profiles'
       }
     );
     return this;
-  }
+  };
 }
 
 export default UserProfile;
