@@ -1,4 +1,6 @@
 import Volunteer from "../models/Volunteer";
+import User from "../models/User";
+
 import * as Yup from "yup";
 
 class VolunteersController {
@@ -41,6 +43,11 @@ class VolunteersController {
       user_location,
       is_sick,
     } = await Volunteer.create(req.body);
+
+    const updateUserTable = User.update(
+      { volunteer_id: id },
+      { where: { email } }
+    );
 
     return res.json({
       id,
