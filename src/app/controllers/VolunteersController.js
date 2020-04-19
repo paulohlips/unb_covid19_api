@@ -1,4 +1,6 @@
 import Volunteer from "../models/Volunteer";
+import User from "../models/User";
+
 import * as Yup from "yup";
 
 class VolunteersController {
@@ -15,8 +17,6 @@ class VolunteersController {
       activities: Yup.string().required(),
       user_location: Yup.string().required(),
     });
-
-    console.log("AAAAAAAAAAAA", schema);
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -43,6 +43,11 @@ class VolunteersController {
       user_location,
       is_sick,
     } = await Volunteer.create(req.body);
+
+    const updateUserTable = User.update(
+      { volunteer_id: id },
+      { where: { email } }
+    );
 
     return res.json({
       id,
@@ -75,6 +80,17 @@ class VolunteersController {
     const volunteers = await Volunteer.findAll({});
 
     return res.json(volunteers);
+  }
+
+  async show(req, res) {
+    const { email } = req.body;
+
+    const volunteer = await Volunteer.findOne({ where: { email } });
+
+    if (volunteer) {
+      return res.json(volunteer);
+    }
+    return res.status(404).json({ message: "Is not volunteer" });
   }
 
   async update(req, res) {

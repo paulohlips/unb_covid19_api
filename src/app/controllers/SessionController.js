@@ -2,6 +2,8 @@ import jwt from "jsonwebtoken";
 import * as Yup from "yup";
 
 import User from "../models/User";
+import Volunteer from "../models/Volunteer";
+
 import auth from "../../config/auth";
 import UserProfile from "../models/UserProfile"
 import Profile from "../models/Profile";
@@ -19,22 +21,18 @@ class SessionController {
 
     const { email, password } = req.body;
 
-
-
-    const user = await User.findOne({
-      where: { email }, 
-      include: [
-        {
-          model: Profile,
-          as: 'profiles',
-          attributes: ['name'],
-          through: {
-            model: UserProfile,
-            attributes: [],
+    const user = await User.findOne(
+      { where: { email } },
+      {
+        include: [
+          {
+            model: Volunteer,
+            as: "volunteer",
+            attributes: ["id", "activities", "specialty"],
           },
-        },
-      ],
-    });
+        ],
+      }
+    );
     if (!user) {
       return res.status(401).json({ error: "User not found" });
     }
@@ -43,14 +41,15 @@ class SessionController {
       return res.status(401).json({ error: "Password does not match" });
     }
 
-    const { id, name, whatsapp, profiles } = user;
+    const { id, name, whatsapp, volunteer_id } = user;
 
     return res.json({
       user: {
         id,
         name,
         email,
-        whatsapp
+        whatsapp,
+        volunteer_id,
       },
       token: jwt.sign({ id, profiles }, auth.secret, {
         expiresIn: auth.expiresIn,

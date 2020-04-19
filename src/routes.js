@@ -25,7 +25,9 @@ routes.post("/sessions", SessionController.store);
 
 routes.post("/users", UserController.store);
 
-routes.post("/profiles",authMiddleware, ProfileController.store);
+routes.get("/volunteers", VolunteersController.index);
+routes.post("/voluntary", VolunteersController.show);
+routes.get("/users", UserController.index);
 
 routes.post("/users_profiles",authMiddleware, UserProfileController.store);
 

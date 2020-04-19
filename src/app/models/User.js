@@ -16,14 +16,15 @@ class User extends Model {
         birth_date: Sequelize.STRING,
         link_unb: Sequelize.STRING,
         risk_group: Sequelize.STRING,
-        user_location: Sequelize.STRING
+        user_location: Sequelize.STRING,
+        matricula_unb: Sequelize.STRING,
       },
       {
-        sequelize
+        sequelize,
       }
     );
 
-    this.addHook("beforeSave", async user => {
+    this.addHook("beforeSave", async (user) => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
       }
@@ -31,14 +32,12 @@ class User extends Model {
     return this;
   }
 
-  static async buscarPorEmail(email) {
-    const user = await super.findOne({ where: { email: email } });
-    if (!user) {
-      return undefined;
-    }
-    return user;
+  static associate(models) {
+    this.belongsTo(models.Volunteer, {
+      foreignKey: "volunteer_id",
+      as: "volunteer",
+    });
   }
-
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }

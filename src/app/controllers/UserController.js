@@ -12,6 +12,8 @@ class UserController {
       birth_date: Yup.string().required(),
       link_unb: Yup.string().required(),
       risk_group: Yup.string(),
+
+      matricula_unb: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -34,6 +36,7 @@ class UserController {
       link_unb,
       risk_group,
       user_location,
+      matricula_unb,
     } = await User.create(req.body);
 
     return res.json({
@@ -46,6 +49,7 @@ class UserController {
       link_unb,
       risk_group,
       user_location,
+      matricula_unb,
     });
   }
 

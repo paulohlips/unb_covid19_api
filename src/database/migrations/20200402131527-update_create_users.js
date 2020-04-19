@@ -5,58 +5,58 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       whatsapp: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       password_hash: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       address: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       user_location: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
       },
       birth_date: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       link_unb: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       risk_group: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     });
   },
 
-  down: queryInterface => {
+  down: (queryInterface) => {
     return queryInterface.dropTable("users");
-  }
+  },
 };
