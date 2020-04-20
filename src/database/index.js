@@ -6,10 +6,8 @@ import Volunteer from "../app/models/Volunteer";
 import HelpRequest from "../app/models/HelpRequest";
 
 import databaseConfig from "../config/database";
-import Profile from "../app/models/Profile";
-import UserProfile from "../app/models/UserProfile";
 
-const models = [User, Volunteer, HelpRequest, Profile, UserProfile];
+const models = [User, Volunteer, HelpRequest];
 
 class Database {
   constructor() {

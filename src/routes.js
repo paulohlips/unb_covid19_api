@@ -7,8 +7,6 @@ import VolunteersController from "./app/controllers/VolunteersController";
 import HelpRequestController from "./app/controllers/HelpRequestController";
 
 import authMiddleware from "./app/middlewares/auth";
-import ProfileController from "./app/controllers/ProfileController";
-import UserProfileController from "./app/controllers/UserProfileController";
 
 const routes = new Router();
 
@@ -29,16 +27,15 @@ routes.get("/volunteers", VolunteersController.index);
 routes.post("/voluntary", VolunteersController.show);
 routes.get("/users", UserController.index);
 
-routes.post("/users_profiles",authMiddleware, UserProfileController.store);
-
 routes.get("/volunteers",authMiddleware, VolunteersController.index);
 routes.get("/users"
 //,authMiddleware
 , UserController.index);
-routes.get("/profiles",authMiddleware, ProfileController.index);
 
 routes.post("/volunteers",authMiddleware, VolunteersController.store);
 routes.put("/volunteers",authMiddleware, VolunteersController.update);
+
+routes.put("/users/profiles", authMiddleware, UserController.setUsersProfile)
 
 routes.get("/help", HelpRequestController.index);
 routes.post("/help", HelpRequestController.store);

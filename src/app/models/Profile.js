@@ -1,25 +1,11 @@
-import Sequelize, { Model } from "sequelize";
-
-class Profile extends Model {
-  static init(sequelize) {
-    super.init(
-      {
-        name: Sequelize.STRING,
-        level: Sequelize.INTEGER
-      },
-      {
-        sequelize
-      }
-    );
-    return this;
-  }
-
-  static associate(model) {
-    this.belongsToMany(model.User, {
-      through: model.UserProfile,
-      as: 'users'
-    });
-  }
-}
+const Profile = Object.freeze({
+    DEFAULT: 0,
+    ADMIN: 1,
+    PROFISSIONAL: 2,
+    VOLUNTARIO: 3,
+    PACIENTE: 4,
+    indexOf: (value) => Object.keys(Profile).find(key => Profile[key] === value),
+    valueOf: (key) => Profile[key]
+});
 
 export default Profile;

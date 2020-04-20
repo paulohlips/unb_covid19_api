@@ -5,9 +5,7 @@ import User from "../models/User";
 import Volunteer from "../models/Volunteer";
 
 import auth from "../../config/auth";
-import UserProfile from "../models/UserProfile"
 import Profile from "../models/Profile";
-
 class SessionController {
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -41,7 +39,7 @@ class SessionController {
       return res.status(401).json({ error: "Password does not match" });
     }
 
-    const { id, name, whatsapp, volunteer_id } = user;
+    const { id, name, whatsapp, volunteer_id, profile_id } = user;
 
     return res.json({
       user: {
@@ -51,7 +49,7 @@ class SessionController {
         whatsapp,
         volunteer_id,
       },
-      token: jwt.sign({ id, profiles }, auth.secret, {
+      token: jwt.sign({ id, profile: Profile.indexOf(profile_id) }, auth.secret, {
         expiresIn: auth.expiresIn,
       }),
     });

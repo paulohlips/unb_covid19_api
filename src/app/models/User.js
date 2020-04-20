@@ -1,7 +1,5 @@
 import Sequelize, { Model } from "sequelize";
 import bcrypt from "bcryptjs";
-import UserProfile from "./UserProfile";
-import Profile from "./Profile";
 
 class User extends Model {
   static init(sequelize) {
@@ -18,6 +16,7 @@ class User extends Model {
         risk_group: Sequelize.STRING,
         user_location: Sequelize.STRING,
         matricula_unb: Sequelize.STRING,
+        profile_id: Sequelize.INTEGER
       },
       {
         sequelize,
@@ -40,13 +39,6 @@ class User extends Model {
   }
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
-  }
-
-  static associate(models) {
-    this.belongsToMany(models.Profile, {
-      through: models.UserProfile,
-      as: 'profiles'
-    });
   }
 }
 
