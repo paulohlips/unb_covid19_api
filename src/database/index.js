@@ -4,10 +4,11 @@ import Sequelize from "sequelize";
 import User from "../app/models/User";
 import Volunteer from "../app/models/Volunteer";
 import HelpRequest from "../app/models/HelpRequest";
+import File from "../app/models/File";
 
 import databaseConfig from "../config/database";
 
-const models = [User, Volunteer, HelpRequest];
+const models = [User, Volunteer, HelpRequest, File];
 
 class Database {
   constructor() {
@@ -18,8 +19,10 @@ class Database {
     this.connection = new Sequelize(databaseConfig);
 
     models
-      .map(model => model.init(this.connection))
-      .map(model => model.associate && model.associate(this.connection.models));
+      .map((model) => model.init(this.connection))
+      .map(
+        (model) => model.associate && model.associate(this.connection.models)
+      );
   }
 }
 
