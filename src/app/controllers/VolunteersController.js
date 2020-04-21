@@ -105,11 +105,30 @@ class VolunteersController {
 
     const { email, is_sick } = req.body;
 
-    const { id, name } = await Volunteer.findOne({ where: { email } });
+    const user = await Volunteer.findOne({ where: { email } });
 
     const result = Volunteer.update({ is_sick: is_sick }, { where: { email } });
 
-    return res.json({ id, name, is_sick });
+    return res.json(user);
+  }
+
+  async updateVolunteer(req, res) {
+    const schema = Yup.object().shape({
+      email: Yup.string().required(),
+      quit: Yup.boolean().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: "Validation fails" });
+    }
+
+    const { email, quit } = req.body;
+
+    const user = await Volunteer.findOne({ where: { email } });
+
+    const result = Volunteer.update({ quit: quit }, { where: { email } });
+
+    return res.json(user);
   }
 }
 

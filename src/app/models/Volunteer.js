@@ -14,10 +14,11 @@ class Volunteer extends Model {
         administrative_region: Sequelize.STRING,
         activities: Sequelize.STRING,
         user_location: Sequelize.STRING,
-        is_sick: Sequelize.BOOLEAN
+        is_sick: Sequelize.BOOLEAN,
+        quit: Sequelize.BOOLEAN,
       },
       {
-        sequelize
+        sequelize,
       }
     );
 

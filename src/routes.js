@@ -30,6 +30,7 @@ routes.get("/users", UserController.index);
 
 routes.post("/volunteers", VolunteersController.store);
 routes.put("/volunteers", VolunteersController.update);
+routes.put("/quitVolunteer", VolunteersController.updateVolunteer);
 
 routes.get("/help", HelpRequestController.index);
 routes.post("/help", HelpRequestController.store);
