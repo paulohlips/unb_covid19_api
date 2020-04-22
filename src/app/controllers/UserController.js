@@ -73,7 +73,7 @@ class UserController {
     var usersToSetProfile = [];
     const map = new Map();
     for (const item of req.body) {
-      const {user_id, profile_id} = item;
+      const { user_id, profile_id } = item;
       if (map.has(user_id) || !Profile.indexOf(profile_id)) {
         continue;
       }
@@ -89,6 +89,15 @@ class UserController {
       await User.update({ profile_id }, { where: { id: user_id } });
     });
     return res.json({ success: true });
+  }
+
+  listProfiles(_, res) {
+    return res.json(Object.keys(Profile)
+      .filter(x => !isNaN(Profile.valueOf(x)) && Profile.valueOf(x) > 0)
+      .map(p => ({
+        name: p.charAt(0).toUpperCase() + p.slice(1).toLowerCase(),
+        value: Profile.valueOf(p)
+      })));
   }
 }
 

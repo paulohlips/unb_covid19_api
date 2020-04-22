@@ -36,6 +36,7 @@ routes.post("/volunteers",authMiddleware, VolunteersController.store);
 routes.put("/volunteers",authMiddleware, VolunteersController.update);
 
 routes.put("/users/profiles", authMiddleware, UserController.setUsersProfile)
+routes.get("/users/profiles", authMiddleware, UserController.listProfiles)
 
 routes.get("/help", HelpRequestController.index);
 routes.post("/help", HelpRequestController.store);
