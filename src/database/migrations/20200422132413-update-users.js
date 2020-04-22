@@ -7,6 +7,20 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      avatar_id: {
+        type: Sequelize.INTEGER,
+        references: { model: "files", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        allowNull: true,
+      },
+      volunteer_id: {
+        type: Sequelize.INTEGER,
+        references: { model: "volunteers", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        allowNull: true,
+      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -20,6 +34,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
+      },
+      matricula_unb: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       password_hash: {
         type: Sequelize.STRING,

@@ -1,14 +1,22 @@
 import File from "../models/File";
+import User from "../models/User";
 
 class FileController {
   async store(req, res) {
     const { originalname: name, filename: path } = req.file;
+    const { email } = req.headers;
 
-    const file = await File.create({
+    const { id, url } = await File.create({
       name,
-      path
+      path,
     });
-    return res.json({ file });
+
+    const updateUserTable = User.update(
+      { avatar_id: id },
+      { where: { email } }
+    );
+
+    return res.json({ id, name, path, url });
   }
 }
 

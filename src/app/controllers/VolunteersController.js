@@ -68,7 +68,6 @@ class VolunteersController {
     const { ra } = req.query;
 
     if (ra) {
-      console.log(ra);
       const volunteers = await Volunteer.findAll({
         where: {
           administrative_region: ra,
