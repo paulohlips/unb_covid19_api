@@ -3,6 +3,7 @@ import * as Yup from "yup";
 
 import User from "../models/User";
 import Volunteer from "../models/Volunteer";
+import File from "../models/File";
 
 import auth from "../../config/auth";
 import Profile from "../models/Profile";
@@ -19,18 +20,21 @@ class SessionController {
 
     const { email, password } = req.body;
 
-    const user = await User.findOne(
-      { where: { email } },
-      {
-        include: [
-          {
-            model: Volunteer,
-            as: "volunteer",
-            attributes: ["id", "activities", "specialty"],
-          },
-        ],
-      }
-    );
+    const user = await User.findOne({
+      where: { email },
+      include: [
+        {
+          model: Volunteer,
+          as: "volunteer",
+          attributes: ["id", "activities", "specialty"],
+        },
+        {
+          model: File,
+          as: "avatar",
+          attributes: ["id", "path"],
+        },
+      ],
+    });
     if (!user) {
       return res.status(401).json({ error: "User not found" });
     }
@@ -39,8 +43,16 @@ class SessionController {
       return res.status(401).json({ error: "Password does not match" });
     }
 
-    const { id, name, whatsapp, volunteer_id, profile_id } = user;
-
+    const {
+      id,
+      name,
+      whatsapp,
+      volunteer_id,
+      avatar_id,
+      profile_id,
+      avatar,
+    } = user;
+    
     return res.json({
       user: {
         id,
@@ -48,6 +60,8 @@ class SessionController {
         email,
         whatsapp,
         volunteer_id,
+        avatar_id,
+        avatar,
       },
       token: jwt.sign({ id, profile: Profile.indexOf(profile_id) }, auth.secret, {
         expiresIn: auth.expiresIn,

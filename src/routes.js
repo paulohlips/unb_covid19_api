@@ -1,14 +1,20 @@
 import { Router } from "express";
+
+import multer from "multer";
 import cors from "cors";
+import multerConfig from "./config/multer";
 
 import UserController from "./app/controllers/UserController";
 import SessionController from "./app/controllers/SessionController";
 import VolunteersController from "./app/controllers/VolunteersController";
 import HelpRequestController from "./app/controllers/HelpRequestController";
+import FileController from "./app/controllers/FileController";
 
 import authMiddleware from "./app/middlewares/auth";
 
 const routes = new Router();
+
+const upload = multer(multerConfig);
 
 routes.use(cors());
 
@@ -28,15 +34,15 @@ routes.post("/voluntary", VolunteersController.show);
 routes.get("/users", UserController.index);
 
 routes.get("/volunteers",authMiddleware, VolunteersController.index);
-routes.get("/users"
-//,authMiddleware
-, UserController.index);
+routes.get("/users",authMiddleware, UserController.index);
 
 routes.post("/volunteers",authMiddleware, VolunteersController.store);
 routes.put("/volunteers",authMiddleware, VolunteersController.update);
+routes.put("/quitVolunteer", VolunteersController.updateVolunteer);
 
 routes.put("/users/profiles", authMiddleware, UserController.setUsersProfile)
 routes.get("/users/profiles", authMiddleware, UserController.listProfiles)
+routes.post("/files", upload.single("file"), FileController.store);
 
 routes.get("/help", HelpRequestController.index);
 routes.post("/help", HelpRequestController.store);

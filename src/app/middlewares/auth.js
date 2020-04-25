@@ -15,20 +15,19 @@ export default async (req, res, next) => {
   try {
     const decoded = await promisify(jwt.verify)(token, authConfig.secret);
 
-    req.userId = decoded.id;
-
     const route = req.route.path.substr(1);
     const method = Object.keys(req.route.methods).find(_ => true);
-    const profile = decoded.profile;
+    const profile = decoded.profile.toLowerCase();
 
     if(!Permissions.match(profile, route, method)){
       return res.status(403).json({ error: "Forbidden" });
     }
 
+    req.userId = decoded.id;
+    req.profile = profile;
+
     return next();
   } catch (err) {
     return res.status(401).json({ error: "Invalid Token" });
   }
-
-  next();
 };

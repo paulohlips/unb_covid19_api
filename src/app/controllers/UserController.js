@@ -1,4 +1,7 @@
 import User from "../models/User";
+import Volunteer from "../models/Volunteer";
+import File from "../models/File";
+
 import * as Yup from "yup";
 import Profile from "../models/Profile";
 
@@ -55,7 +58,20 @@ class UserController {
   }
 
   async index(req, res) {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      include: [
+        {
+          model: Volunteer,
+          as: "volunteer",
+          attributes: ["id", "activities", "specialty"],
+        },
+        {
+          model: File,
+          as: "avatar",
+          attributes: ["id", "path"],
+        },
+      ],
+    });
 
     return res.json(users);
   }
