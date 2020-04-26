@@ -11,6 +11,7 @@ import HelpRequestController from "./app/controllers/HelpRequestController";
 import FileController from "./app/controllers/FileController";
 import RatesController from "./app/controllers/RatesController";
 import CommentsController from "./app/controllers/CommentsController";
+import ChatController from "./app/controllers/ChatController";
 import authMiddleware from "./app/middlewares/auth";
 
 const routes = new Router();
@@ -46,6 +47,8 @@ routes.put("/rates", RatesController.update);
 
 routes.get("/comments", CommentsController.index);
 routes.post("/comments", CommentsController.store);
+
+routes.post("/chats", ChatController.store);
 
 routes.get("/help", HelpRequestController.index);
 routes.post("/help", HelpRequestController.store);

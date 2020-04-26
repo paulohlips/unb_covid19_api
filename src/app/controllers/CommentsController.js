@@ -14,11 +14,11 @@ class CommentsController {
 
     const { volunteer_id } = req.body;
 
-    const x = await Comment.findAll({
+    const comments = await Comment.findAll({
       where: { volunteer_id },
     });
 
-    return res.json(x);
+    return res.json(comments);
   }
 
   async store(req, res) {
