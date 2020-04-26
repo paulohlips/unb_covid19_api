@@ -16,6 +16,8 @@ class Volunteer extends Model {
         user_location: Sequelize.STRING,
         is_sick: Sequelize.BOOLEAN,
         quit: Sequelize.BOOLEAN,
+        rate: Sequelize.FLOAT,
+        count_avaliation: Sequelize.INTEGER,
       },
       {
         sequelize,

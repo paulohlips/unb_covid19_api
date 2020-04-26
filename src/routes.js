@@ -9,7 +9,7 @@ import SessionController from "./app/controllers/SessionController";
 import VolunteersController from "./app/controllers/VolunteersController";
 import HelpRequestController from "./app/controllers/HelpRequestController";
 import FileController from "./app/controllers/FileController";
-
+import RatesController from "./app/controllers/RatesController";
 import authMiddleware from "./app/middlewares/auth";
 
 const routes = new Router();
@@ -25,6 +25,9 @@ routes.get("/", (req, res) => {
 });
 
 routes.post("/users", UserController.store);
+
+routes.get("/rates", RatesController.show);
+routes.put("/rates", RatesController.update);
 
 routes.post("/sessions", SessionController.store);
 
