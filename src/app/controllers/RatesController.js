@@ -22,7 +22,6 @@ class RatesController {
     });
 
     let num_avaliations = count_avaliation + 1;
-    let newRate = rate + volunteer_rate;
     let sum = rate + volunteer_rate;
     let mean = sum / num_avaliations;
 
