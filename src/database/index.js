@@ -5,10 +5,12 @@ import User from "../app/models/User";
 import Volunteer from "../app/models/Volunteer";
 import HelpRequest from "../app/models/HelpRequest";
 import File from "../app/models/File";
+import Comment from "../app/models/Comment";
+import Chat from "../app/models/Chat";
 
 import databaseConfig from "../config/database";
 
-const models = [User, Volunteer, HelpRequest, File];
+const models = [User, Volunteer, HelpRequest, File, Comment, Chat];
 
 class Database {
   constructor() {
