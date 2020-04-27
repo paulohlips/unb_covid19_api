@@ -6,21 +6,20 @@ import * as Yup from "yup";
 class ChatController {
   async index(req, res) {
     const schema = Yup.object().shape({
-      user1_id: Yup.number().required(),
-      user2_id: Yup.number().required(),
+      user: Yup.number().required(),
     });
 
-    if (!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.query))) {
       return res.status(400).json({ error: "Validation fails" });
     }
 
-    const { user1_id, user2_id } = req.body;
+    const { user } = req.query;
 
-    const chatId = await Chat.findAll({
-      where: { user1_id, user2_id },
+    const chats = await Chat.findAll({
+      where: { user1_id: user },
     });
 
-    return res.json(chatId);
+    return res.json(chats);
   }
 
   async store(req, res) {
