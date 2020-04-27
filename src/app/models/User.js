@@ -1,5 +1,6 @@
 import Sequelize, { Model } from "sequelize";
 import bcrypt from "bcryptjs";
+import Profile from "./Profile";
 
 class User extends Model {
   static init(sequelize) {
@@ -16,7 +17,11 @@ class User extends Model {
         risk_group: Sequelize.STRING,
         user_location: Sequelize.STRING,
         matricula_unb: Sequelize.STRING,
-        profile_id: Sequelize.INTEGER
+        profile_id: Sequelize.INTEGER,
+        profile: {
+          type: Sequelize.VIRTUAL,
+          get() { return Profile.indexOf(this.profile_id).toLowerCase() }
+        },
       },
       {
         sequelize,

@@ -5,7 +5,8 @@ const Profile = Object.freeze({
     VOLUNTARIO: 3,
     PACIENTE: 4,
     indexOf: (value) => Object.keys(Profile).find(key => Profile[key] === value),
-    valueOf: (key) => Profile[key]
+    valueOf: (key) => Profile[key],
+    match: (key) => !!key && !!Profile[key.toUpperCase()]
 });
 
 export default Profile;

@@ -16,7 +16,7 @@ class UserController {
       birth_date: Yup.string().required(),
       link_unb: Yup.string().required(),
       risk_group: Yup.string(),
-
+      profile_id: Yup.number(),
       matricula_unb: Yup.string().required(),
     });
 
@@ -28,6 +28,11 @@ class UserController {
 
     if (userExists) {
       return res.status(400).json({ error: "User already exists." });
+    }
+
+    const {body: {profile_id}} = req;
+    if(!profile_id && req.profile != "admin"){
+      req.body.profile_id = Profile.PACIENTE;
     }
 
     const {
@@ -42,6 +47,7 @@ class UserController {
       user_location,
       matricula_unb,
     } = await User.create(req.body);
+
 
     return res.json({
       id,

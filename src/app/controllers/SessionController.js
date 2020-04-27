@@ -49,7 +49,7 @@ class SessionController {
       whatsapp,
       volunteer_id,
       avatar_id,
-      profile_id,
+      profile,
       avatar,
     } = user;
     
@@ -60,10 +60,11 @@ class SessionController {
         email,
         whatsapp,
         volunteer_id,
+        profile,
         avatar_id,
         avatar,
       },
-      token: jwt.sign({ id, profile: Profile.indexOf(profile_id) }, auth.secret, {
+      token: jwt.sign({ id, profile }, auth.secret, {
         expiresIn: auth.expiresIn,
       }),
     });
