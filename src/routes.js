@@ -27,6 +27,7 @@ routes.get("/", (req, res) => {
 });
 
 routes.post("/users", UserController.store);
+routes.post("/files", upload.single("file"), FileController.store);
 
 routes.post("/sessions", SessionController.store);
 
@@ -35,8 +36,6 @@ routes.use(authMiddleware);
 routes.get("/volunteers", VolunteersController.index);
 routes.post("/voluntary", VolunteersController.show);
 routes.get("/users", UserController.index);
-
-routes.post("/files", upload.single("file"), FileController.store);
 
 routes.post("/volunteers", VolunteersController.store);
 routes.put("/volunteers", VolunteersController.update);
