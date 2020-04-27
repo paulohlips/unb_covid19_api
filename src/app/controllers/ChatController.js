@@ -15,7 +15,7 @@ class ChatController {
 
     const { user } = req.query;
 
-    const { chats } = await Chat.findAll({
+    const chats = await Chat.findAll({
       where: { user1_id: user },
     });
 
