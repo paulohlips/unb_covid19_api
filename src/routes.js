@@ -25,19 +25,19 @@ routes.get("/", (req, res) => {
 });
 
 
+routes.post("/files", upload.single("file"), FileController.store);
 routes.post("/sessions", SessionController.store);
 
 routes.post("/users", UserController.store);
 
-routes.get("/volunteers", VolunteersController.index);
 routes.post("/voluntary", VolunteersController.show);
-routes.get("/users", UserController.index);
 
 routes.get("/volunteers",authMiddleware, VolunteersController.index);
 routes.get("/users",authMiddleware, UserController.index);
 
 routes.post("/volunteers",authMiddleware, VolunteersController.store);
 routes.put("/volunteers",authMiddleware, VolunteersController.update);
+
 routes.put("/quitVolunteer", VolunteersController.updateVolunteer);
 
 routes.put("/users/profiles", authMiddleware, UserController.setUsersProfile)
