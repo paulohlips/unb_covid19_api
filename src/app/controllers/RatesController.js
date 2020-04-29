@@ -2,6 +2,10 @@ import Volunteer from "../models/Volunteer";
 
 import * as Yup from "yup";
 
+let num_avaliations,
+  sum,
+  mean = 0;
+
 class RatesController {
   async store(req, res) {}
 
@@ -21,16 +25,18 @@ class RatesController {
       where: { email },
     });
 
-    let num_avaliations = count_avaliation + 1;
-    let sum = rate + volunteer_rate;
-    let mean = sum / num_avaliations;
+    num_avaliations = count_avaliation + 1;
+    sum = rate + volunteer_rate;
+    mean = sum / num_avaliations;
+
+    mean = parseFloat(mean.toFixed(1));
 
     await Volunteer.update(
       { rate: mean, count_avaliation: num_avaliations },
       { where: { email } }
     );
 
-    return res.json({ mean });
+    return res.json({ num_avaliations, rate });
   }
 
   async show(req, res) {
