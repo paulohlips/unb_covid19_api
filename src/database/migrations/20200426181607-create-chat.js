@@ -9,11 +9,17 @@ module.exports = {
       },
       user1_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        references: { model: "users", key: "id" },
+        onUpdate: "SET NULL",
+        onDelete: "SET NULL",
+        allowNull: true,
       },
       user2_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        references: { model: "users", key: "id" },
+        onUpdate: "SET NULL",
+        onDelete: "SET NULL",
+        allowNull: true,
       },
       chat_id: {
         type: Sequelize.STRING,

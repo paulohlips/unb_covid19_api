@@ -1,4 +1,6 @@
 import Chat from "../models/Chat";
+import User from "../models/User";
+
 import Op from "sequelize";
 
 import * as Yup from "yup";
@@ -17,6 +19,18 @@ class ChatController {
 
     const chats = await Chat.findAll({
       where: { user1_id: user },
+      include: [
+        {
+          model: User,
+          as: "user1",
+          attributes: ["name", "email"],
+        },
+        {
+          model: User,
+          as: "user2",
+          attributes: ["name", "email"],
+        },
+      ],
     });
 
     return res.json(chats);
