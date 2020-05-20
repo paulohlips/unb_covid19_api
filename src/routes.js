@@ -12,6 +12,8 @@ import FileController from "./app/controllers/FileController";
 import RatesController from "./app/controllers/RatesController";
 import CommentsController from "./app/controllers/CommentsController";
 import ChatController from "./app/controllers/ChatController";
+import SosButtonController from "./app/controllers/SosButonController";
+
 import authMiddleware from "./app/middlewares/auth";
 
 const routes = new Router();
@@ -30,6 +32,8 @@ routes.post("/users", UserController.store);
 routes.post("/files", upload.single("file"), FileController.store);
 
 routes.post("/sessions", SessionController.store);
+
+routes.post("/sos", SosButtonController.store);
 
 routes.use(authMiddleware);
 
@@ -52,5 +56,7 @@ routes.post("/chats", ChatController.store);
 
 routes.get("/help", HelpRequestController.index);
 routes.post("/help", HelpRequestController.store);
+
+routes.get("/sos", SosButtonController.index);
 
 export default routes;
