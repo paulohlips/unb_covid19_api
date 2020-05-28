@@ -7,7 +7,7 @@ import Profile from "../models/Profile";
 
 class UserController {
   async store(req, res) {
-    const schema = Yup.object().shape({
+    /*     const schema = Yup.object().shape({
       name: Yup.string().required(),
       whatsapp: Yup.string().required(),
       email: Yup.string().email().required(),
@@ -23,7 +23,7 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
     }
-
+ */
     const userExists = await User.findOne({ where: { email: req.body.email } });
 
     if (userExists) {

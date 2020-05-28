@@ -10,15 +10,15 @@ module.exports = {
       avatar_id: {
         type: Sequelize.INTEGER,
         references: { model: "files", key: "id" },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        onUpdate: "SET NULL",
+        onDelete: "SET NULL",
         allowNull: true,
       },
       volunteer_id: {
         type: Sequelize.INTEGER,
         references: { model: "volunteers", key: "id" },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        onUpdate: "SET NULL",
+        onDelete: "SET NULL",
         allowNull: true,
       },
       name: {
