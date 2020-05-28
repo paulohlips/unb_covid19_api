@@ -7,26 +7,31 @@ const Permissions = {
         profissional: write,
         voluntario: write,
         paciente: write,
+        vigilante: read
     },
     sessions: {
         profissional: write,
         voluntario: write,
-        paciente: write
+        paciente: write,
+        vigilante: read
     },
     volunteers: {
         profissional: readWrite,
         voluntario: readWrite,
-        paciente: read
+        paciente: read,
+        vigilante: read
     },
     help: {
         profissional: read,
         voluntario: read,
-        paciente: readWrite
+        paciente: readWrite,
+        vigilante: readWrite
     },
     voluntary: {
         profissional: readWrite,
         voluntario: readWrite,
-        paciente: read
+        paciente: read,
+        vigilante: read
     },
     'users/profiles': {
         profissional: [],
