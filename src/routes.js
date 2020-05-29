@@ -48,7 +48,7 @@ routes.put("/quitVolunteer", VolunteersController.updateVolunteer);
 routes.get("/rates", RatesController.show);
 routes.put("/rates", RatesController.update);
 
-routes.get("/comments", CommentsController.index);
+routes.get("/comments/volunteer_id", CommentsController.index);
 routes.post("/comments", CommentsController.store);
 
 routes.get("/chats", ChatController.index);
