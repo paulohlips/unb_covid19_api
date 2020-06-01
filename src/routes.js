@@ -23,9 +23,7 @@ const upload = multer(multerConfig);
 routes.use(cors());
 
 routes.get("/", (req, res) => {
-  return res.send(
-    "Bem-vindo, \n\nPara mais informações consulte a documentação em\n\n https://github.com/paulohlips/unb_covid19_api "
-  );
+  return res.send("Bem-vindo, \n\nAqui nasce o projeto Conta Vinculada.");
 });
 
 routes.post("/users", UserController.store);
