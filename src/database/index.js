@@ -7,10 +7,11 @@ import HelpRequest from "../app/models/HelpRequest";
 import File from "../app/models/File";
 import Comment from "../app/models/Comment";
 import Chat from "../app/models/Chat";
+import SosButton from "../app/models/SosButton";
 
 import databaseConfig from "../config/database";
 
-const models = [User, Volunteer, HelpRequest, File, Comment, Chat];
+const models = [User, Volunteer, HelpRequest, File, Comment, Chat, SosButton];
 
 class Database {
   constructor() {

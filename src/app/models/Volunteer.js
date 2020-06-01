@@ -18,6 +18,7 @@ class Volunteer extends Model {
         quit: Sequelize.BOOLEAN,
         rate: Sequelize.FLOAT,
         count_avaliation: Sequelize.INTEGER,
+        sum: Sequelize.FLOAT,
       },
       {
         sequelize,

@@ -2,6 +2,10 @@ import Volunteer from "../models/Volunteer";
 
 import * as Yup from "yup";
 
+let num_avaliations,
+  newSum,
+  mean = 0;
+
 class RatesController {
   async store(req, res) {}
 
@@ -17,24 +21,24 @@ class RatesController {
 
     const { email, volunteer_rate } = req.body;
 
-    const { count_avaliation, rate } = await Volunteer.findOne({
+    const { sum, count_avaliation } = await Volunteer.findOne({
       where: { email },
     });
 
-    let num_avaliations = count_avaliation + 1;
-    let sum = rate + volunteer_rate;
-    let mean = sum / num_avaliations;
+    num_avaliations = count_avaliation + 1;
+    newSum = sum + volunteer_rate;
+    mean = newSum / num_avaliations;
 
     await Volunteer.update(
-      { rate: mean, count_avaliation: num_avaliations },
+      { rate: mean, count_avaliation: num_avaliations, sum: newSum },
       { where: { email } }
     );
 
-    return res.json({ mean });
+    return res.json({ mean, num_avaliations });
   }
 
   async show(req, res) {
-    const { email } = req.body;
+    const { email } = req.query;
 
     const volunteer = await Volunteer.findOne({ where: { email } });
 

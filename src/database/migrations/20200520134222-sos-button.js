@@ -1,27 +1,21 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("chats", {
+    return queryInterface.createTable("sos_buttons", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      user1_id: {
-        type: Sequelize.INTEGER,
-        references: { model: "users", key: "id" },
-        onUpdate: "SET NULL",
-        onDelete: "SET NULL",
-        allowNull: true,
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
-      user2_id: {
-        type: Sequelize.INTEGER,
-        references: { model: "users", key: "id" },
-        onUpdate: "SET NULL",
-        onDelete: "SET NULL",
-        allowNull: true,
+      whatsapp: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
-      chat_id: {
+      user_location: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -37,6 +31,6 @@ module.exports = {
   },
 
   down: (queryInterface) => {
-    return queryInterface.dropTable("chats");
+    return queryInterface.dropTable("sos_buttons");
   },
 };
