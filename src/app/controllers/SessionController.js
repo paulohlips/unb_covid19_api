@@ -6,7 +6,7 @@ import Volunteer from "../models/Volunteer";
 import File from "../models/File";
 
 import auth from "../../config/auth";
-
+import Profile from "../models/Profile";
 class SessionController {
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -49,10 +49,10 @@ class SessionController {
       whatsapp,
       volunteer_id,
       avatar_id,
-      volunteer,
+      profile,
       avatar,
     } = user;
-
+    
     return res.json({
       user: {
         id,
@@ -60,11 +60,11 @@ class SessionController {
         email,
         whatsapp,
         volunteer_id,
+        profile,
         avatar_id,
-        volunteer,
         avatar,
       },
-      token: jwt.sign({ id }, auth.secret, {
+      token: jwt.sign({ id, profile }, auth.secret, {
         expiresIn: auth.expiresIn,
       }),
     });

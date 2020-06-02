@@ -28,22 +28,26 @@ routes.get("/", (req, res) => {
   );
 });
 
-routes.post("/users", UserController.store);
-routes.post("/files", upload.single("file"), FileController.store);
 
+routes.post("/files", upload.single("file"), FileController.store);
 routes.post("/sessions", SessionController.store);
 
-routes.post("/sos", SosButtonController.store);
+routes.post("/users", authMiddleware, UserController.store);
+routes.get("/users",authMiddleware, UserController.index);
+routes.put("/users/profiles", authMiddleware, UserController.setUsersProfile);
+routes.get("/users/profiles", authMiddleware, UserController.listProfiles);
 
-routes.use(authMiddleware);
-
-routes.get("/volunteers", VolunteersController.index);
 routes.post("/voluntary", VolunteersController.show);
-routes.get("/users", UserController.index);
+routes.get("/volunteers",authMiddleware, VolunteersController.index);
+routes.post("/volunteers",authMiddleware, VolunteersController.store);
+routes.put("/volunteers",authMiddleware, VolunteersController.update);
 
-routes.post("/volunteers", VolunteersController.store);
-routes.put("/volunteers", VolunteersController.update);
-routes.put("/quitVolunteer", VolunteersController.updateVolunteer);
+routes.put("/quitVolunteer", authMiddleware, VolunteersController.updateVolunteer);
+
+routes.post("/files", upload.single("file"), FileController.store);
+
+routes.get("/help", HelpRequestController.index);
+routes.post("/help", HelpRequestController.store);
 
 routes.get("/rates", RatesController.show);
 routes.put("/rates", RatesController.update);
@@ -54,9 +58,7 @@ routes.post("/comments", CommentsController.store);
 routes.get("/chats", ChatController.index);
 routes.post("/chats", ChatController.store);
 
-routes.get("/help", HelpRequestController.index);
-routes.post("/help", HelpRequestController.store);
-
 routes.get("/sos", SosButtonController.index);
+routes.post("/sos", SosButtonController.store);
 
 export default routes;
