@@ -17,10 +17,13 @@ class User extends Model {
         risk_group: Sequelize.STRING,
         user_location: Sequelize.STRING,
         matricula_unb: Sequelize.STRING,
+        type: Sequelize.STRING,
         profile_id: Sequelize.INTEGER,
         profile: {
           type: Sequelize.VIRTUAL,
-          get() { return Profile.indexOf(this.profile_id).toLowerCase() }
+          get() {
+            return Profile.indexOf(this.profile_id).toLowerCase();
+          },
         },
       },
       {
@@ -46,6 +49,7 @@ class User extends Model {
   }
 
   checkPassword(password) {
+    console.log(password, this.password_hash);
     return bcrypt.compare(password, this.password_hash);
   }
 }

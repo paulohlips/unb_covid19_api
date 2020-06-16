@@ -8,10 +8,20 @@ import File from "../app/models/File";
 import Comment from "../app/models/Comment";
 import Chat from "../app/models/Chat";
 import SosButton from "../app/models/SosButton";
+import Orientation from "../app/models/Orientation";
 
 import databaseConfig from "../config/database";
 
-const models = [User, Volunteer, HelpRequest, File, Comment, Chat, SosButton];
+const models = [
+  User,
+  Volunteer,
+  HelpRequest,
+  File,
+  Comment,
+  Chat,
+  Orientation,
+  SosButton,
+];
 
 class Database {
   constructor() {

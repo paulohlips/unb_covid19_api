@@ -7,7 +7,7 @@ import Profile from "../models/Profile";
 
 class UserController {
   async store(req, res) {
-    /*     const schema = Yup.object().shape({
+    const schema = Yup.object().shape({
       name: Yup.string().required(),
       whatsapp: Yup.string().required(),
       email: Yup.string().email().required(),
@@ -18,20 +18,23 @@ class UserController {
       risk_group: Yup.string(),
       profile_id: Yup.number(),
       matricula_unb: Yup.string().required(),
+      type: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
     }
- */
+
     const userExists = await User.findOne({ where: { email: req.body.email } });
 
     if (userExists) {
       return res.status(400).json({ error: "User already exists." });
     }
 
-    const {body: {profile_id}} = req;
-    if(!profile_id && req.profile != "admin"){
+    const {
+      body: { profile_id },
+    } = req;
+    if (!profile_id && req.profile != "admin") {
       req.body.profile_id = Profile.PACIENTE;
     }
 
@@ -46,8 +49,8 @@ class UserController {
       risk_group,
       user_location,
       matricula_unb,
+      type,
     } = await User.create(req.body);
-
 
     return res.json({
       id,
@@ -60,6 +63,8 @@ class UserController {
       risk_group,
       user_location,
       matricula_unb,
+      profile_id,
+      type,
     });
   }
 
@@ -83,10 +88,12 @@ class UserController {
   }
 
   async setUsersProfile(req, res) {
-    const schema = Yup.array().of(Yup.object().shape({
-      user_id: Yup.number().required(),
-      profile_id: Yup.number().required(),
-    }));
+    const schema = Yup.array().of(
+      Yup.object().shape({
+        user_id: Yup.number().required(),
+        profile_id: Yup.number().required(),
+      })
+    );
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
@@ -102,7 +109,7 @@ class UserController {
       map.set(user_id, true);
       usersToSetProfile.push({
         user_id,
-        profile_id
+        profile_id,
       });
     }
 
@@ -114,12 +121,14 @@ class UserController {
   }
 
   listProfiles(_, res) {
-    return res.json(Object.keys(Profile)
-      .filter(x => !isNaN(Profile.valueOf(x)) && Profile.valueOf(x) > 0)
-      .map(p => ({
-        name: p.charAt(0).toUpperCase() + p.slice(1).toLowerCase(),
-        value: Profile.valueOf(p)
-      })));
+    return res.json(
+      Object.keys(Profile)
+        .filter((x) => !isNaN(Profile.valueOf(x)) && Profile.valueOf(x) > 0)
+        .map((p) => ({
+          name: p.charAt(0).toUpperCase() + p.slice(1).toLowerCase(),
+          value: Profile.valueOf(p),
+        }))
+    );
   }
 }
 
