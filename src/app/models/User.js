@@ -19,6 +19,7 @@ class User extends Model {
         matricula_unb: Sequelize.STRING,
         type: Sequelize.STRING,
         profile_id: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         profile: {
           type: Sequelize.VIRTUAL,
           get() {

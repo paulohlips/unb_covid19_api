@@ -51,6 +51,7 @@ class SessionController {
       avatar_id,
       profile,
       avatar,
+      type,
     } = user;
 
     return res.json({
@@ -63,6 +64,7 @@ class SessionController {
         profile,
         avatar_id,
         avatar,
+        type,
       },
       token: jwt.sign({ id, profile }, auth.secret, {
         expiresIn: auth.expiresIn,
