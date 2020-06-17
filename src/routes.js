@@ -13,6 +13,7 @@ import RatesController from "./app/controllers/RatesController";
 import CommentsController from "./app/controllers/CommentsController";
 import ChatController from "./app/controllers/ChatController";
 import SosButtonController from "./app/controllers/SosButonController";
+import OrientationController from "./app/controllers/OrientationController";
 
 import authMiddleware from "./app/middlewares/auth";
 
@@ -28,21 +29,28 @@ routes.get("/", (req, res) => {
   );
 });
 
+routes.get("/orientations", OrientationController.show);
+routes.post("/orientations", authMiddleware, OrientationController.store);
+routes.put("/orientations/:id", authMiddleware, OrientationController.update);
 
 routes.post("/files", upload.single("file"), FileController.store);
 routes.post("/sessions", SessionController.store);
 
-routes.post("/users", authMiddleware, UserController.store);
-routes.get("/users",authMiddleware, UserController.index);
+routes.post("/users", UserController.store);
+routes.get("/users", authMiddleware, UserController.index);
 routes.put("/users/profiles", authMiddleware, UserController.setUsersProfile);
 routes.get("/users/profiles", authMiddleware, UserController.listProfiles);
 
 routes.post("/voluntary", VolunteersController.show);
-routes.get("/volunteers",authMiddleware, VolunteersController.index);
-routes.post("/volunteers",authMiddleware, VolunteersController.store);
-routes.put("/volunteers",authMiddleware, VolunteersController.update);
+routes.get("/volunteers", authMiddleware, VolunteersController.index);
+routes.post("/volunteers", authMiddleware, VolunteersController.store);
+routes.put("/volunteers", authMiddleware, VolunteersController.update);
 
-routes.put("/quitVolunteer", authMiddleware, VolunteersController.updateVolunteer);
+routes.put(
+  "/quitVolunteer",
+  authMiddleware,
+  VolunteersController.updateVolunteer
+);
 
 routes.post("/files", upload.single("file"), FileController.store);
 

@@ -52,7 +52,7 @@ class SessionController {
       profile,
       avatar,
     } = user;
-    
+
     return res.json({
       user: {
         id,
