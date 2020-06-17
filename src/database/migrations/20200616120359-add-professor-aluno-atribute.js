@@ -3,7 +3,6 @@ module.exports = {
     // logic for transforming into the new state
     return queryInterface.addColumn("users", "type", {
       type: Sequelize.STRING,
-      allowNull: false,
     });
   },
 
