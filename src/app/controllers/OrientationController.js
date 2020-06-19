@@ -36,7 +36,15 @@ class OrientationController {
         return res.status(200).json(orientation);
       }
 
-      const orientation = await Orientation.findAll();
+      const orientation = await Orientation.findAll({
+        include: [
+          {
+            model: User,
+            as: "user",
+            attributes: ["id", "name", "email", "whatsapp"],
+          },
+        ],
+      });
       return res.status(200).json(orientation);
     } catch (err) {
       return res
