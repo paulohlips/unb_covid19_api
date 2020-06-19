@@ -1,4 +1,5 @@
 import Orientation from "../models/Orientation";
+import User from "../models/User";
 
 class OrientationController {
   async store(req, res) {
@@ -23,6 +24,13 @@ class OrientationController {
           where: {
             departament: dep,
           },
+          include: [
+            {
+              model: User,
+              as: "user",
+              attributes: ["id", "name", "email", "whatsapp"],
+            },
+          ],
         });
 
         return res.status(200).json(orientation);

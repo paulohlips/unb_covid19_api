@@ -9,10 +9,16 @@ module.exports = {
       },
       requester_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        references: { model: "users", key: "id" },
+        onUpdate: "SET NULL",
+        onDelete: "SET NULL",
+        allowNull: true,
       },
       professor_id: {
         type: Sequelize.INTEGER,
+        references: { model: "users", key: "id" },
+        onUpdate: "SET NULL",
+        onDelete: "SET NULL",
         allowNull: true,
       },
       departament: {
