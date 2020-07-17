@@ -3,7 +3,7 @@ import * as Yup from "yup";
 
 class HelpRequestController {
   async store(req, res) {
-    const schema = Yup.object().shape({
+    /*    const schema = Yup.object().shape({
       name: Yup.string().required(),
       sintoms: Yup.string().required(),
       whatsapp: Yup.string().required()
@@ -11,14 +11,14 @@ class HelpRequestController {
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Validation fails" });
-    }
+    } */
 
     const {
       id,
       name,
       whatsapp,
       user_location,
-      sintoms
+      sintoms,
     } = await HelpRequest.create(req.body);
 
     return res.json({
@@ -26,7 +26,7 @@ class HelpRequestController {
       name,
       whatsapp,
       user_location,
-      sintoms
+      sintoms,
     });
   }
 
