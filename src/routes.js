@@ -29,6 +29,7 @@ routes.get("/", (req, res) => {
   );
 });
 
+routes.get("/orientations", OrientationController.index);
 routes.get("/orientations", OrientationController.show);
 routes.post("/orientations", authMiddleware, OrientationController.store);
 routes.put("/orientations/:id", authMiddleware, OrientationController.update);

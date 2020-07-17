@@ -15,7 +15,7 @@ class OrientationController {
     }
   }
 
-  async show(req, res) {
+  async index(req, res) {
     const { dep } = req.query;
     try {
       if (dep) {
@@ -51,6 +51,18 @@ class OrientationController {
         .status(500)
         .json({ message: `Problema no servidor. Erro: ${err}` });
     }
+  }
+
+  async show(req, res) {
+    const orientations = await Orientation.findAll({
+      where: { requester_id: req.userId },
+    });
+    return res.status(200).json(orientations);
+  }
+  catch(err) {
+    return res
+      .status(500)
+      .json({ message: `Problema no servidor. Erro: ${err}` });
   }
 
   async update(req, res) {
