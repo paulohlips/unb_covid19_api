@@ -54,8 +54,9 @@ class OrientationController {
   }
 
   async show(req, res) {
+    const { id } = req.params;
     const orientations = await Orientation.findAll({
-      where: { requester_id: req.userId },
+      where: { requester_id: id },
     });
     return res.status(200).json(orientations);
   }
