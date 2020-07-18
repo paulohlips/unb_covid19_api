@@ -1,5 +1,6 @@
 import Orientation from "../models/Orientation";
 import User from "../models/User";
+import { Op } from "sequelize";
 
 class OrientationController {
   async store(req, res) {
@@ -19,7 +20,6 @@ class OrientationController {
     const { dep } = req.query;
     try {
       if (dep) {
-        console.log(dep);
         const orientation = await Orientation.findAll({
           where: {
             departament: dep,
@@ -56,7 +56,7 @@ class OrientationController {
   async show(req, res) {
     const { id } = req.params;
     const orientations = await Orientation.findAll({
-      where: { requester_id: id },
+      where: { [Op.or]: [{ requester_id: id }, { professor_id: id }] },
     });
     return res.status(200).json(orientations);
   }
