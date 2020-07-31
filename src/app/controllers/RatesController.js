@@ -11,7 +11,7 @@ class RatesController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      email: Yup.string().required(),
+      volunteer_id: Yup.number().required(),
       volunteer_rate: Yup.number().required(),
     });
 
@@ -19,10 +19,10 @@ class RatesController {
       return res.status(400).json({ error: "Validation fails" });
     }
 
-    const { email, volunteer_rate } = req.body;
+    const { volunteer_id, volunteer_rate } = req.body;
 
     const { sum, count_avaliation } = await Volunteer.findOne({
-      where: { email },
+      where: { id: volunteer_id },
     });
 
     num_avaliations = count_avaliation + 1;
@@ -31,7 +31,7 @@ class RatesController {
 
     await Volunteer.update(
       { rate: mean, count_avaliation: num_avaliations, sum: newSum },
-      { where: { email } }
+      { where: { id: volunteer_id } }
     );
 
     return res.json({ mean, num_avaliations });
