@@ -27,7 +27,7 @@ class VolunteersController {
     });
 
     if (volunteerExists) {
-      return res.status(400).json({ error: "volunteerExists already exists." });
+      return res.status(422).json({ error: "volunteerExists already exists." });
     }
 
     const {
@@ -108,7 +108,7 @@ class VolunteersController {
 
     const result = Volunteer.update({ is_sick: is_sick }, { where: { email } });
 
-    return res.json(user);
+    return res.json({ message: "Estado saúde atualizado com sucesso." });
   }
 
   async updateVolunteer(req, res) {
